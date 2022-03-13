@@ -1,0 +1,72 @@
+---
+###
+# THESE CONFIGURATIONS APPLY TO ALL NODES IN YOUR CLUSTER
+
+# If you want to configure things individually per node, please edit
+# host_vars/<node-name>
+### 
+
+additional_packages:
+  - vim
+  - htop
+
+
+## USERS
+## -----------------------------------------------------------------------
+## Add the names of the users who will have root ssh access to all nodes,
+## and then add a public key to pubkeys with the file named for each user
+
+# users: &USERS
+#  - sergio
+
+## Which users have access to docker? Use the line bellow so all
+## users specified above have access
+# docker_users: *USERS
+
+## CLOUD PROVIDERS
+## -----------------------------------------------------------------------
+## WARNING - This will mount the volumes in all nodes.
+## to mount volumes individually on only one machine / node
+## edit host_vars/<host_name>
+
+# digital_ocean_volumes:
+#   - volume_id: scsi-0DO_Volume_something-something
+#     mount_point: /mnt/external-volume
+
+# hetzner_volumes:
+#   - volume_id: scsi-0HC_Volume_1234567
+#     mount_point: /mnt/external-volume
+
+
+## DOCKER
+## -----------------------------------------------------------------------
+## Which users have access to docker? Defaults to the same value as users
+## (ie all users)
+
+## geerlingguy.docker role configuration
+docker_edition: ce
+
+## WARNING - this applies to all node. To use different
+## volumes in different nodes, use the host_vars
+# docker_daemon_options:
+#   data-root: /mnt/external-volume
+
+## DOMAINS
+## -----------------------------------------------------------------------
+domains:
+  main: "yourdomain.tld" # REPLACE THIS
+
+
+## FEATURES AND SETTINGS
+## -----------------------------------------------------------------------
+## Enable traefik ACME feature
+## If enabled, traefik will use Let's Encrypt to get an SSL certificate automatically
+## Should be disabled only on local environments (localhost or vagrant)
+letsencrypt: True
+letsencrypt_email: admin@{{ domains.main }}
+
+## CORE
+deploly_portainer: true
+
+## SECURITY
+disable_password_ssh: true

@@ -1,0 +1,13 @@
+---
+- hosts: all
+  remote_user: root
+  gather_facts: true
+  tasks:
+    - debug:
+        msg: "Loaded base playbook"
+  roles:
+    - initialize
+    - hetzner
+    - digital-ocean
+    - hardening
+    - docker
